@@ -9,8 +9,8 @@
   * USE_OPENMP
   * USE_NEON
   * USE_OPENCL
+* build pass in android-9
 
 # To do
-* builded pass in lower android level api
 * use cmake to compile
 * support ios
