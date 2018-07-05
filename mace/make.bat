@@ -1,0 +1,1 @@
+D:\android-ndk-r15c-windows-x86_64\android-ndk-r15c\ndk-build NDK_PROJECT_PATH=. NDK_APPLICATION_MK=Application.mk
