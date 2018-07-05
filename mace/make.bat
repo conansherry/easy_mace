@@ -1,2 +1,2 @@
-rem D:\android-ndk-r15c-windows-x86_64\android-ndk-r15c\ndk-build NDK_PROJECT_PATH=. NDK_APPLICATION_MK=Application.mk -j8
-D:\android-ndk-r12b-windows-x86_64\android-ndk-r12b\ndk-build NDK_PROJECT_PATH=. NDK_APPLICATION_MK=Application.mk -j8
+D:\android-ndk-r15c-windows-x86_64\android-ndk-r15c\ndk-build NDK_PROJECT_PATH=. NDK_APPLICATION_MK=Application.mk -j8
+rem D:\android-ndk-r12b-windows-x86_64\android-ndk-r12b\ndk-build NDK_PROJECT_PATH=. NDK_APPLICATION_MK=Application.mk -j8
