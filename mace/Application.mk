@@ -1,3 +1,12 @@
+#[on / off]
+USE_OPENMP := on
+
+#[on / off]
+USE_NEON := on
+
+#[on / off]
+USE_OPENCL := on
+
 APP_STL := gnustl_static
 
 APP_CPPFLAGS += -fexceptions -frtti
