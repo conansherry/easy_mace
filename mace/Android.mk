@@ -72,7 +72,7 @@ ifeq ($(USE_OPENCL), on)
 endif
 
 LOCAL_CFLAGS += -Os -Wall -fPIC
-LOCAL_CPPFLAGS += -Os -std=c++11 -Wall -fPIC -D__STDC_LIMIT_MACROS
+LOCAL_CPPFLAGS += -Os -std=c++11 -Wall -fPIC -D__STDC_LIMIT_MACROS -fexceptions
 
 ifeq ($(USE_OPENMP), on)
 	LOCAL_CFLAGS += -DMACE_ENABLE_OPENMP -fopenmp
