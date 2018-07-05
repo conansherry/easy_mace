@@ -5,6 +5,10 @@
 # Getting started
 
 * use ndk-build
+* three switch in easy_mace/mace/Application.mk
+  * USE_OPENMP
+  * USE_NEON
+  * USE_OPENCL
 
 # To do
 * builded pass in lower android level api
