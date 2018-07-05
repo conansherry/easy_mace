@@ -7,7 +7,6 @@ LOCAL_MODULE := easy_mace
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../external/half \
                     $(LOCAL_PATH)/../external/opencl \
                     $(LOCAL_PATH)/../external/opencl/opencl20 \
-                    $(LOCAL_PATH)/../external/half \
                     $(LOCAL_PATH)/..
                     
 # core
@@ -72,8 +71,8 @@ ifeq ($(USE_OPENCL), on)
     LOCAL_SRC_FILES += $(SOURCE_LIST:$(LOCAL_PATH)/%=%)
 endif
 
-LOCAL_CFLAGS += -Os -fPIC -Wall -Wno-unused -Wno-sign-compare
-LOCAL_CPPFLAGS += -Os -std=c++11 -Wall -Wno-unused -Wno-sign-compare
+LOCAL_CFLAGS += -Os -Wall -fPIC
+LOCAL_CPPFLAGS += -Os -std=c++11 -Wall -fPIC -D__STDC_LIMIT_MACROS
 
 ifeq ($(USE_OPENMP), on)
 	LOCAL_CFLAGS += -DMACE_ENABLE_OPENMP -fopenmp
@@ -87,8 +86,8 @@ ifeq ($(USE_NEON), on)
 endif
 
 ifeq ($(USE_OPENCL), on)
-	LOCAL_CFLAGS += -DMACE_ENABLE_OPENCL -D_GLIBCXX_USE_C99_MATH_TR1 
-	LOCAL_CPPFLAGS += -DMACE_ENABLE_OPENCL -D_GLIBCXX_USE_C99_MATH_TR1 
+	LOCAL_CFLAGS += -DMACE_ENABLE_OPENCL
+	LOCAL_CPPFLAGS += -DMACE_ENABLE_OPENCL
 endif
 
 #LOCAL_LDLIBS += -llog

@@ -36,9 +36,10 @@ inline float GetRuntimeFailureRatioFromEnv() {
 
 bool ShouldMockRuntimeFailure() {
   static unsigned int seed = time(NULL);
+  std::srand(seed);
   static float mock_runtime_failure_ratio = GetRuntimeFailureRatioFromEnv();
   if (mock_runtime_failure_ratio > 1e-6) {
-    float random_ratio = rand_r(&seed) / static_cast<float>(RAND_MAX);
+    float random_ratio = std::rand() / static_cast<float>(RAND_MAX);
     if (random_ratio < mock_runtime_failure_ratio) {
       VLOG(0) << "Mock runtime failure.";
       return true;

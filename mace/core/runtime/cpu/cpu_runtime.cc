@@ -32,6 +32,20 @@
 #include "mace/public/mace_runtime.h"
 #include "mace/utils/logging.h"
 
+#ifndef CPU_ZERO
+    #define CUSTOM_SCHED_SETAFFINITY
+    #define CPU_SETSIZE 1024
+    #define __NCPUBITS  (8 * sizeof (unsigned long))
+    typedef struct
+    {
+        unsigned long __bits[CPU_SETSIZE / __NCPUBITS];
+    } cpu_set_t;
+    #define CPU_SET(cpu, cpusetp) \
+      ((cpusetp)->__bits[(cpu)/__NCPUBITS] |= (1UL << ((cpu) % __NCPUBITS)))
+    #define CPU_ZERO(cpusetp) \
+      memset((cpusetp), 0, sizeof(cpu_set_t))
+#endif
+
 namespace mace {
 
 namespace {
@@ -83,7 +97,12 @@ void SetThreadAffinity(cpu_set_t mask) {
 #else
   pid_t pid = syscall(SYS_gettid);
 #endif
+
+#ifndef CUSTOM_SCHED_SETAFFINITY
   int err = sched_setaffinity(pid, sizeof(mask), &mask);
+#else
+  int err = syscall(__NR_sched_setaffinity, pid, sizeof(mask), &mask);
+#endif
   MACE_CHECK(err == 0, "set affinity error: ", strerror(errno));
 }
 

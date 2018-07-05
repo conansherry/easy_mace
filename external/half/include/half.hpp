@@ -1260,7 +1260,7 @@ namespace half_float
 			static expr remainder(float x, float y)
 			{
 			#if HALF_ENABLE_CPP11_CMATH
-				return expr(std::remainder(x, y));
+				return expr(remainder(x, y));
 			#else
 				if(builtin_isnan(x) || builtin_isnan(y))
 					return expr(std::numeric_limits<float>::quiet_NaN());
@@ -1291,7 +1291,7 @@ namespace half_float
 			static expr remquo(float x, float y, int *quo)
 			{
 			#if HALF_ENABLE_CPP11_CMATH
-				return expr(std::remquo(x, y, quo));
+				return expr(remquo(x, y, quo));
 			#else
 				if(builtin_isnan(x) || builtin_isnan(y))
 					return expr(std::numeric_limits<float>::quiet_NaN());
@@ -1337,7 +1337,7 @@ namespace half_float
 			static expr fdim(float x, float y)
 			{
 			#if HALF_ENABLE_CPP11_CMATH
-				return expr(std::fdim(x, y));
+				return expr(fdim(x, y));
 			#else
 				return expr((x<=y) ? 0.0f : (x-y));
 			#endif
@@ -1351,7 +1351,7 @@ namespace half_float
 			static expr fma(float x, float y, float z)
 			{
 			#if HALF_ENABLE_CPP11_CMATH && defined(FP_FAST_FMAF)
-				return expr(std::fma(x, y, z));
+				return expr(fma(x, y, z));
 			#else
 				return expr(x*y+z);
 			#endif
@@ -1372,7 +1372,7 @@ namespace half_float
 			static expr expm1(float arg)
 			{
 			#if HALF_ENABLE_CPP11_CMATH
-				return expr(std::expm1(arg));
+				return expr(expm1(arg));
 			#else
 				return expr(static_cast<float>(std::exp(static_cast<double>(arg))-1.0));
 			#endif
@@ -1384,7 +1384,7 @@ namespace half_float
 			static expr exp2(float arg)
 			{
 			#if HALF_ENABLE_CPP11_CMATH
-				return expr(std::exp2(arg));
+				return expr(exp2(arg));
 			#else
 				return expr(static_cast<float>(std::exp(arg*0.69314718055994530941723212145818)));
 			#endif
@@ -1406,7 +1406,7 @@ namespace half_float
 			static expr log1p(float arg)
 			{
 			#if HALF_ENABLE_CPP11_CMATH
-				return expr(std::log1p(arg));
+				return expr(log1p(arg));
 			#else
 				return expr(static_cast<float>(std::log(1.0+arg)));
 			#endif
@@ -1418,7 +1418,7 @@ namespace half_float
 			static expr log2(float arg)
 			{
 			#if HALF_ENABLE_CPP11_CMATH
-				return expr(std::log2(arg));
+				return expr(log2(arg));
 			#else
 				return expr(static_cast<float>(std::log(static_cast<double>(arg))*1.4426950408889634073599246810019));
 			#endif
@@ -1435,7 +1435,7 @@ namespace half_float
 			static expr cbrt(float arg)
 			{
 			#if HALF_ENABLE_CPP11_CMATH
-				return expr(std::cbrt(arg));
+				return expr(cbrt(arg));
 			#else
 				if(builtin_isnan(arg) || builtin_isinf(arg))
 					return expr(arg);
@@ -1451,7 +1451,7 @@ namespace half_float
 			static expr hypot(float x, float y)
 			{
 			#if HALF_ENABLE_CPP11_CMATH
-				return expr(std::hypot(x, y));
+				return expr(hypot(x, y));
 			#else
 				return expr((builtin_isinf(x) || builtin_isinf(y)) ? std::numeric_limits<float>::infinity() : 
 					static_cast<float>(std::sqrt(static_cast<double>(x)*x+static_cast<double>(y)*y)));
@@ -1521,7 +1521,7 @@ namespace half_float
 			static expr asinh(float arg)
 			{
 			#if HALF_ENABLE_CPP11_CMATH
-				return expr(std::asinh(arg));
+				return expr(asinh(arg));
 			#else
 				return expr((arg==-std::numeric_limits<float>::infinity()) ? arg : static_cast<float>(std::log(arg+std::sqrt(arg*arg+1.0))));
 			#endif
@@ -1533,7 +1533,7 @@ namespace half_float
 			static expr acosh(float arg)
 			{
 			#if HALF_ENABLE_CPP11_CMATH
-				return expr(std::acosh(arg));
+				return expr(acosh(arg));
 			#else
 				return expr((arg<-1.0f) ? std::numeric_limits<float>::quiet_NaN() : static_cast<float>(std::log(arg+std::sqrt(arg*arg-1.0))));
 			#endif
@@ -1545,7 +1545,7 @@ namespace half_float
 			static expr atanh(float arg)
 			{
 			#if HALF_ENABLE_CPP11_CMATH
-				return expr(std::atanh(arg));
+				return expr(atanh(arg));
 			#else
 				return expr(static_cast<float>(0.5*std::log((1.0+arg)/(1.0-arg))));
 			#endif
@@ -1557,7 +1557,7 @@ namespace half_float
 			static expr erf(float arg)
 			{
 			#if HALF_ENABLE_CPP11_CMATH
-				return expr(std::erf(arg));
+				return expr(erf(arg));
 			#else
 				return expr(static_cast<float>(erf(static_cast<double>(arg))));
 			#endif
@@ -1569,7 +1569,7 @@ namespace half_float
 			static expr erfc(float arg)
 			{
 			#if HALF_ENABLE_CPP11_CMATH
-				return expr(std::erfc(arg));
+				return expr(erfc(arg));
 			#else
 				return expr(static_cast<float>(1.0-erf(static_cast<double>(arg))));
 			#endif
@@ -1581,7 +1581,7 @@ namespace half_float
 			static expr lgamma(float arg)
 			{
 			#if HALF_ENABLE_CPP11_CMATH
-				return expr(std::lgamma(arg));
+				return expr(lgamma(arg));
 			#else
 				if(builtin_isinf(arg))
 					return expr(std::numeric_limits<float>::infinity());
@@ -1603,7 +1603,7 @@ namespace half_float
 			static expr tgamma(float arg)
 			{
 			#if HALF_ENABLE_CPP11_CMATH
-				return expr(std::tgamma(arg));
+				return expr(tgamma(arg));
 			#else
 				if(arg == 0.0f)
 					return builtin_signbit(arg) ? expr(-std::numeric_limits<float>::infinity()) : expr(std::numeric_limits<float>::infinity());
@@ -2009,7 +2009,7 @@ namespace half_float
 			static expr fmin(float x, float y)
 			{
 			#if HALF_ENABLE_CPP11_CMATH
-				return expr(std::fmin(x, y));
+				return expr(fmin(x, y));
 			#else
 				if(builtin_isnan(x))
 					return expr(y);
@@ -2026,7 +2026,7 @@ namespace half_float
 			static expr fmax(float x, float y)
 			{
 			#if HALF_ENABLE_CPP11_CMATH
-				return expr(std::fmax(x, y));
+				return expr(fmax(x, y));
 			#else
 				if(builtin_isnan(x))
 					return expr(y);

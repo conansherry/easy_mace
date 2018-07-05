@@ -34,7 +34,7 @@ LOCAL_SRC_FILES :=  src/google/protobuf/arena.cc \
                     src/google/protobuf/stubs/time.cc \
                     src/google/protobuf/wire_format_lite.cc
 
-LOCAL_CPPFLAGS += -O3 -std=c++11 -Wall -Wno-unused -Wno-sign-compare -DHAVE_PTHREAD
+LOCAL_CPPFLAGS += -Os -std=c++11 -Wall -DHAVE_PTHREAD -frtti -fPIC
 
 #LOCAL_LDLIBS += -pthread -llog
 #include $(BUILD_SHARED_LIBRARY)
