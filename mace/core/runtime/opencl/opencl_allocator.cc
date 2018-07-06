@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef MACE_ENABLE_OPENCL
+
 #include "mace/core/runtime/opencl/opencl_allocator.h"
 #include "mace/core/runtime/opencl/cl2_header.h"
 #include "mace/core/runtime/opencl/opencl_runtime.h"
@@ -158,3 +160,5 @@ void OpenCLAllocator::Unmap(void *buffer, void *mapped_ptr) const {
 bool OpenCLAllocator::OnHost() const { return false; }
 
 }  // namespace mace
+
+#endif

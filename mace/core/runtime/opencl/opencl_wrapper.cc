@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef MACE_ENABLE_OPENCL
+
 #include "mace/core/runtime/opencl/opencl_wrapper.h"
 
 #include <CL/opencl.h>
@@ -980,3 +982,5 @@ clCreateCommandQueue(cl_context context,
   MACE_LATENCY_LOGGER(3, "clCreateCommandQueue");
   return func(context, device, properties, errcode_ret);
 }
+
+#endif

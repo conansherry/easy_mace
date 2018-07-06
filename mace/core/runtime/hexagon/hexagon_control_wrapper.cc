@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef MACE_ENABLE_HEXAGON
+
 #include <sys/time.h>
 #include <thread>  // NOLINT(build/c++11)
 #include <vector>
@@ -431,3 +433,5 @@ bool HexagonControlWrapper::ExecuteGraphPreQuantize(const Tensor &input_tensor,
 }
 
 }  // namespace mace
+
+#endif

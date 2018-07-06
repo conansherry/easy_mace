@@ -15,8 +15,10 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>
+#ifndef _WIN32
 #include <sys/mman.h>
 #include <unistd.h>
+#endif
 
 #include <memory>
 

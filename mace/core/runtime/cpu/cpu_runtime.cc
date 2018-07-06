@@ -19,9 +19,11 @@
 #endif
 
 #include <errno.h>
+#ifndef _WIN32
 #include <unistd.h>
 #include <sys/syscall.h>
 #include <sys/types.h>
+#endif
 #include <string.h>
 #include <algorithm>
 #include <utility>

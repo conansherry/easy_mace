@@ -1,6 +1,6 @@
-# easy mace for Mobile AI Compute Engine
+# easy mace (easy Mobile AI Compute Engine)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-* Thank you to [XiaoMI/mace](https://github.com/XiaoMi/mace)
+* Thanks to [XiaoMI/mace](https://github.com/XiaoMi/mace)
 
 # Getting started
 
@@ -9,7 +9,7 @@
   * USE_OPENMP
   * USE_NEON
   * USE_OPENCL
-* build pass in android-9
+* builed pass in android-9
 
 # To do
 * use cmake to compile

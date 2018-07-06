@@ -18,6 +18,13 @@
 #include <stdint.h>
 #ifdef __hexagon__
 #include <HAP_perf.h>
+#elif defined(_WIN32)
+#include <ctime>
+#include <windows.h>
+#undef small
+#undef min
+#undef max
+#undef abs
 #else
 #include <sys/time.h>
 #endif
@@ -27,6 +34,10 @@ namespace mace {
 inline int64_t NowMicros() {
 #ifdef __hexagon__
   return HAP_perf_get_time_us();
+#elif defined(_WIN32)
+  LARGE_INTEGER counter;
+  QueryPerformanceCounter(&counter);
+  return (int64_t)counter.QuadPart;
 #else
   struct timeval tv;
   gettimeofday(&tv, nullptr);

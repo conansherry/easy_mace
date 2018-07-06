@@ -16,10 +16,11 @@
 
 #include <fcntl.h>
 #include <limits.h>
+#ifndef _WIN32
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <unistd.h>
-
+#endif
 #include <algorithm>
 #include <cstring>
 #include <memory>

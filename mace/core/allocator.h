@@ -29,6 +29,8 @@
 #include "mace/public/mace.h"
 #include "mace/public/mace_runtime.h"
 
+#include "mace/core/cross_platform_utils.h"
+
 namespace mace {
 
 #if defined(__hexagon__)

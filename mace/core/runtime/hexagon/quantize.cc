@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef MACE_ENABLE_HEXAGON
+
 #include <algorithm>
 
 #include "mace/core/runtime/hexagon/quantize.h"
@@ -107,3 +109,5 @@ void Quantizer::DeQuantize(const Tensor &in_tensor,
 
 
 }  // namespace mace
+
+#endif
