@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef MACE_ENABLE_OPENCL
+
 #include "mace/kernels/fully_connected.h"
 #include "mace/utils/tuner.h"
 
@@ -309,3 +311,5 @@ template struct FullyConnectedFunctor<DeviceType::GPU, half>;
 
 }  // namespace kernels
 }  // namespace mace
+
+#endif

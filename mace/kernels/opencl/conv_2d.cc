@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef MACE_ENABLE_OPENCL
+
 #include "mace/kernels/conv_2d.h"
 #include "mace/kernels/opencl/helper.h"
 
@@ -133,3 +135,5 @@ template struct Conv2dFunctor<DeviceType::GPU, half>;
 
 }  // namespace kernels
 }  // namespace mace
+
+#endif

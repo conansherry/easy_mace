@@ -25,8 +25,9 @@ endif()
 
 # BEGIN OPTION
 
-EASY_MACE_OPTION(BUILD_SHARED_LIBRARIES       "Build shared library"               OFF)
+#EASY_MACE_OPTION(BUILD_SHARED_LIBRARIES       "Build shared library"               OFF)
 EASY_MACE_OPTION(BUILD_IOS_FRAMEWORK          "Build ios framework"                OFF)
+EASY_MACE_OPTION(BUILD_TESTS                  "Build tests application"            OFF)
 
 # END OPTION
 
@@ -72,7 +73,6 @@ set(EASY_MACE_ALL_SRCS "")
 easy_mace_subdirlist(easy_mace_subdirs "mace")
 foreach(subdir ${easy_mace_subdirs})
   if(EXISTS "${subdir}/CMakeLists.txt")
-    message(STATUS "${subdir}/CMakeLists.txt")
     include("${subdir}/CMakeLists.txt")
   endif()
 endforeach()
@@ -82,7 +82,7 @@ easy_mace_make_group("${EASY_MACE_ALL_HEADERS}")
 easy_mace_make_group("${EASY_MACE_ALL_SRCS}")
 
 # build library
-set(libname "mace")
+set(libname "easy_mace")
 set(EASY_MACE_ALL_LIBS ${libname})
 easy_mace_buildlibrary(${libname} ${EASY_MACE_LIBTYPE} SOURCES ${EASY_MACE_ALL_HEADERS} ${EASY_MACE_ALL_SRCS} DEPENDENCIES ${THIRD_PARTY_DEPENDENCIES})
 if(USE_ACCELERATE)
@@ -91,4 +91,15 @@ endif()
 if(BUILD_IOS_FRAMEWORK)
   easy_mace_add_framework(opencv2 ${libname})
   easy_mace_set_framework(${libname})
+endif()
+
+list(APPEND THIRD_PARTY_DEPENDENCIES "easy_mace")
+
+if(BUILD_TESTS)
+  easy_mace_subdirlist(test_subdirs "tests")
+  foreach(subdir ${test_subdirs})
+    if(EXISTS "${subdir}/CMakeLists.txt")
+	  add_subdirectory(${subdir})
+    endif()
+  endforeach()
 endif()

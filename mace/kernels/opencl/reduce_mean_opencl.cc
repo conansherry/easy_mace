@@ -2,6 +2,8 @@
 // Copyright (c) 2017 XiaoMi All rights reserved.
 //
 
+#ifdef MACE_ENABLE_OPENCL
+
 #include "mace/kernels/reduce_mean.h"
 #include "mace/core/runtime/opencl/cl2_header.h"
 #include "mace/core/runtime/opencl/opencl_runtime.h"
@@ -149,3 +151,5 @@ template struct ReduceMeanFunctor<DeviceType::GPU, float>;
 template struct ReduceMeanFunctor<DeviceType::GPU, half>;
 }  // namespace kernels
 }  // namespace mace
+
+#endif

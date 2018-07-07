@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef MACE_ENABLE_OPENCL
+
 #include "mace/ops/image_to_buffer.h"
 
 namespace mace {
@@ -33,3 +35,5 @@ void Register_ImageToBuffer(OperatorRegistry *op_registry) {
 
 }  // namespace ops
 }  // namespace mace
+
+#endif

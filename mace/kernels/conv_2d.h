@@ -523,7 +523,7 @@ struct Conv2dFunctor<DeviceType::CPU, float> : Conv2dFunctorBase {
       float *transformed_input_data = transformed_input.mutable_data<float>();
       float *transformed_output_data = transformed_output.mutable_data<float>();
 
-      conv_func = [=](const float *pad_input, float *pad_output) {
+      conv_func = [&](const float *pad_input, float *pad_output) {
         WinoGradConv3x3s1(pad_input,
                           transformed_filter_ptr,
                           batch,
@@ -537,7 +537,7 @@ struct Conv2dFunctor<DeviceType::CPU, float> : Conv2dFunctorBase {
                           pad_output);
       };
     } else if (use_neon_3x3_s1) {
-      conv_func = [=](const float *pad_input, float *pad_output) {
+      conv_func = [&](const float *pad_input, float *pad_output) {
         Conv2dNeonK3x3S1(pad_input,
                          filter_data,
                          extra_input_shape,
@@ -545,7 +545,7 @@ struct Conv2dFunctor<DeviceType::CPU, float> : Conv2dFunctorBase {
                          pad_output);
       };
     } else if (use_neon_3x3_s2) {
-      conv_func = [=](const float *pad_input, float *pad_output) {
+      conv_func = [&](const float *pad_input, float *pad_output) {
         Conv2dNeonK3x3S2(pad_input,
                          filter_data,
                          extra_input_shape,
@@ -553,7 +553,7 @@ struct Conv2dFunctor<DeviceType::CPU, float> : Conv2dFunctorBase {
                          pad_output);
       };
     } else if (use_neon_1x1_s1) {
-      conv_func = [=](const float *pad_input, float *pad_output) {
+      conv_func = [&](const float *pad_input, float *pad_output) {
         Conv2dNeonK1x1S1(pad_input,
                          filter_data,
                          batch,
@@ -564,7 +564,7 @@ struct Conv2dFunctor<DeviceType::CPU, float> : Conv2dFunctorBase {
                          pad_output);
       };
     } else if (use_neon_5x5_s1) {
-      conv_func = [=](const float *pad_input, float *pad_output) {
+      conv_func = [&](const float *pad_input, float *pad_output) {
         Conv2dNeonK5x5S1(pad_input,
                          filter_data,
                          extra_input_shape,
@@ -572,7 +572,7 @@ struct Conv2dFunctor<DeviceType::CPU, float> : Conv2dFunctorBase {
                          pad_output);
       };
     } else if (use_neon_1x7_s1) {
-      conv_func = [=](const float *pad_input, float *pad_output) {
+      conv_func = [&](const float *pad_input, float *pad_output) {
         Conv2dNeonK1x7S1(pad_input,
                          filter_data,
                          extra_input_shape,
@@ -580,7 +580,7 @@ struct Conv2dFunctor<DeviceType::CPU, float> : Conv2dFunctorBase {
                          pad_output);
       };
     } else if (use_neon_7x1_s1) {
-      conv_func = [=](const float *pad_input, float *pad_output) {
+      conv_func = [&](const float *pad_input, float *pad_output) {
         Conv2dNeonK7x1S1(pad_input,
                          filter_data,
                          extra_input_shape,
@@ -588,7 +588,7 @@ struct Conv2dFunctor<DeviceType::CPU, float> : Conv2dFunctorBase {
                          pad_output);
       };
     } else if (use_neon_7x7_s1) {
-      conv_func = [=](const float *pad_input, float *pad_output) {
+      conv_func = [&](const float *pad_input, float *pad_output) {
         Conv2dNeonK7x7S1(pad_input,
                          filter_data,
                          extra_input_shape,
@@ -596,7 +596,7 @@ struct Conv2dFunctor<DeviceType::CPU, float> : Conv2dFunctorBase {
                          pad_output);
       };
     } else if (use_neon_7x7_s2) {
-      conv_func = [=](const float *pad_input, float *pad_output) {
+      conv_func = [&](const float *pad_input, float *pad_output) {
         Conv2dNeonK7x7S2(pad_input,
                          filter_data,
                          extra_input_shape,
@@ -604,7 +604,7 @@ struct Conv2dFunctor<DeviceType::CPU, float> : Conv2dFunctorBase {
                          pad_output);
       };
     } else if (use_neon_7x7_s3) {
-      conv_func = [=](const float *pad_input, float *pad_output) {
+      conv_func = [&](const float *pad_input, float *pad_output) {
         Conv2dNeonK7x7S3(pad_input,
                          filter_data,
                          extra_input_shape,
@@ -612,7 +612,7 @@ struct Conv2dFunctor<DeviceType::CPU, float> : Conv2dFunctorBase {
                          pad_output);
       };
     } else if (use_neon_1x15_s1) {
-      conv_func = [=](const float *pad_input, float *pad_output) {
+      conv_func = [&](const float *pad_input, float *pad_output) {
         Conv2dNeonK1x15S1(pad_input,
                          filter_data,
                          extra_input_shape,
@@ -620,7 +620,7 @@ struct Conv2dFunctor<DeviceType::CPU, float> : Conv2dFunctorBase {
                          pad_output);
       };
     } else if (use_neon_15x1_s1) {
-      conv_func = [=](const float *pad_input, float *pad_output) {
+      conv_func = [&](const float *pad_input, float *pad_output) {
         Conv2dNeonK15x1S1(pad_input,
                           filter_data,
                           extra_input_shape,
@@ -628,7 +628,7 @@ struct Conv2dFunctor<DeviceType::CPU, float> : Conv2dFunctorBase {
                           pad_output);
       };
     } else {
-      conv_func = [=](const float *pad_input, float *pad_output) {
+      conv_func = [&](const float *pad_input, float *pad_output) {
         Conv2dGeneral(pad_input,
                       filter_data,
                       extra_input_shape,

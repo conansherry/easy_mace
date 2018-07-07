@@ -75,28 +75,17 @@ class CPUAllocator : public Allocator {
     }
 
     void *data = nullptr;
-#if defined(__ANDROID__) || defined(__hexagon__)
-    data = memalign(kMaceAlignment, nbytes);
-    if (data == NULL) {
-      LOG(WARNING) << "Allocate CPU Buffer with "
-                   << nbytes << " bytes failed because of"
-                   << strerror(errno);
-      *result = nullptr;
-      return MaceStatus::MACE_OUT_OF_RESOURCES;
-    }
-#else
-    int ret = posix_memalign(&data, kMaceAlignment, nbytes);
+    int ret = mace_memalign(&data, kMaceAlignment, nbytes);
     if (ret != 0) {
       LOG(WARNING) << "Allocate CPU Buffer with "
                    << nbytes << " bytes failed because of"
                    << strerror(errno);
       if (data != NULL) {
-        free(data);
+          mace_memfree(data);
       }
       *result = nullptr;
       return MaceStatus::MACE_OUT_OF_RESOURCES;
     }
-#endif
     // TODO(heliangliang) This should be avoided sometimes
     memset(data, 0, nbytes);
     *result = data;
@@ -116,11 +105,11 @@ class CPUAllocator : public Allocator {
   void Delete(void *data) const override {
     MACE_CHECK_NOTNULL(data);
     VLOG(3) << "Free CPU buffer";
-    free(data);
+    mace_memfree(data);
   }
   void DeleteImage(void *data) const override {
     LOG(FATAL) << "Free CPU image";
-    free(data);
+    mace_memfree(data);
   };
   void *Map(void *buffer, size_t offset, size_t nbytes) const override {
     MACE_UNUSED(nbytes);

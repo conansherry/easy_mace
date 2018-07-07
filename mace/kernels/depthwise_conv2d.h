@@ -219,7 +219,7 @@ struct DepthwiseConv2dFunctor<DeviceType::CPU, float>
 
     if (filter_h == 3 && filter_w == 3 && stride_h == 1 && stride_w == 1
       && dilation_h == 1 && dilation_w == 1) {
-      conv_func = [=](const float *input, float *output) {
+      conv_func = [&](const float *input, float *output) {
         DepthwiseConv2dNeonK3x3S1(input,
                                   filter_data,
                                   input_shape,
@@ -233,7 +233,7 @@ struct DepthwiseConv2dFunctor<DeviceType::CPU, float>
       };
     } else if (filter_h == 3 && filter_w == 3 && stride_h == 2 && stride_w == 2
       && dilation_h == 1 && dilation_w == 1) {
-      conv_func = [=](const float *input, float *output) {
+      conv_func = [&](const float *input, float *output) {
         DepthwiseConv2dNeonK3x3S2(input,
                                   filter_data,
                                   input_shape,
@@ -246,7 +246,7 @@ struct DepthwiseConv2dFunctor<DeviceType::CPU, float>
                                   output);
       };
     } else {
-      conv_func = [=](const float *input, float *output) {
+      conv_func = [&](const float *input, float *output) {
         DepthwiseConv2dGeneral(input,
                                filter_data,
                                input_shape,

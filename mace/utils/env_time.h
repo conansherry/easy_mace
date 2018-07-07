@@ -20,6 +20,7 @@
 #include <HAP_perf.h>
 #elif defined(_WIN32)
 #include <ctime>
+#define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #undef small
 #undef min
@@ -42,6 +43,27 @@ inline int64_t NowMicros() {
   struct timeval tv;
   gettimeofday(&tv, nullptr);
   return static_cast<int64_t>(tv.tv_sec) * 1000000 + tv.tv_usec;
+#endif
+}
+
+inline double TickFerquency() {
+#if defined _WIN32
+    LARGE_INTEGER freq;
+    QueryPerformanceFrequency(&freq);
+    return (double)freq.QuadPart;
+#elif defined __linux || defined __linux__
+    return 1e9;
+#elif defined __MACH__ && defined __APPLE__
+    static double freq = 0;
+    if (freq == 0)
+    {
+        mach_timebase_info_data_t sTimebaseInfo;
+        mach_timebase_info(&sTimebaseInfo);
+        freq = sTimebaseInfo.denom * 1e9 / sTimebaseInfo.numer;
+    }
+    return freq;
+#else
+    return 1e6;
 #endif
 }
 

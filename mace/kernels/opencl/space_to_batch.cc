@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef MACE_KERNELS_OPENCL_SPACE_TO_BATCH_H_
-#define MACE_KERNELS_OPENCL_SPACE_TO_BATCH_H_
+#ifdef MACE_ENABLE_OPENCL
 
 #include "mace/kernels/space_to_batch.h"
 #include "mace/core/runtime/opencl/opencl_runtime.h"
@@ -135,4 +134,5 @@ template struct SpaceToBatchFunctor<DeviceType::GPU, half>;
 
 }  // namespace kernels
 }  // namespace mace
-#endif  // MACE_KERNELS_OPENCL_SPACE_TO_BATCH_H_
+
+#endif

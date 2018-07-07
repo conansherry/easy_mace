@@ -54,6 +54,9 @@ namespace {
 
 #ifndef MACE_ENABLE_OPENMP
 int GetCPUCount() {
+#ifdef _WIN32
+  return 0;
+#else
   char path[32];
   int cpu_count = 0;
   int result = 0;
@@ -69,10 +72,14 @@ int GetCPUCount() {
     }
     cpu_count++;
   }
+#endif
 }
 #endif
 
 int GetCPUMaxFreq(int cpu_id) {
+#ifdef _WIN32
+  return 0;
+#else
   char path[64];
   snprintf(path, sizeof(path),
           "/sys/devices/system/cpu/cpu%d/cpufreq/cpuinfo_max_freq",
@@ -91,9 +98,12 @@ int GetCPUMaxFreq(int cpu_id) {
   }
   fclose(fp);
   return freq;
+#endif
 }
 
 void SetThreadAffinity(cpu_set_t mask) {
+#ifdef _WIN32
+#else
 #if defined(__ANDROID__)
   pid_t pid = gettid();
 #else
@@ -106,6 +116,7 @@ void SetThreadAffinity(cpu_set_t mask) {
   int err = syscall(__NR_sched_setaffinity, pid, sizeof(mask), &mask);
 #endif
   MACE_CHECK(err == 0, "set affinity error: ", strerror(errno));
+#endif
 }
 
 }  // namespace

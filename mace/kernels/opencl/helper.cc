@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef MACE_ENABLE_OPENCL
+
 #include "mace/kernels/opencl/helper.h"
 
 #include <algorithm>
@@ -496,3 +498,5 @@ void TuningOrRun2DKernel(const cl::Kernel &kernel,
 
 }  // namespace kernels
 }  // namespace mace
+
+#endif

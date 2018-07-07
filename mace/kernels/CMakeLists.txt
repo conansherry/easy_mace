@@ -1,4 +1,4 @@
-set(module_dir "core")
+set(module_dir "kernels")
 
 # module files dir
 set(EASY_MACE_HEDAER_DIR "mace/${module_dir}")

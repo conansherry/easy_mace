@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef MACE_TUNER_PRO
+
 #include <map>
 #include <string>
 #include <unordered_map>
@@ -34,3 +36,5 @@ bool GetTuningParams(
 }
 
 }  // namespace mace
+
+#endif

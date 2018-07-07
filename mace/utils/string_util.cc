@@ -21,6 +21,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <numeric>
 
 namespace mace {
 namespace string_util {

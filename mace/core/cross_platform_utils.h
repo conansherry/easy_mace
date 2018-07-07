@@ -6,8 +6,8 @@
 namespace mace
 {
 
-#ifdef _WIN32
-    int posix_memalign(void **ptr, size_t align, size_t size);
-#endif
+    int mace_memalign(void **ptr, size_t align, size_t size);
+
+    void mace_memfree(void *ptr);
 
 }

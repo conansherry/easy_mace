@@ -15,10 +15,6 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>
-#ifndef _WIN32
-#include <sys/mman.h>
-#include <unistd.h>
-#endif
 
 #include <memory>
 
@@ -305,28 +301,42 @@ MaceStatus MaceEngine::Run(const std::map<std::string, MaceTensor> &inputs,
 
 const unsigned char *LoadModelData(const std::string &model_data_file,
                                    const size_t &data_size) {
-  int fd = open(model_data_file.c_str(), O_RDONLY);
-  MACE_CHECK(fd >= 0, "Failed to open model data file ",
-             model_data_file, ", error code: ", strerror(errno));
+  std::ifstream fd(model_data_file.c_str(), std::ios::in | std::ios::binary);
+  size_t length;
+  fd.seekg(0, std::ios::end);
+  length = fd.tellg();
+  fd.seekg(0, std::ios::beg);
 
-  const unsigned char *model_data = static_cast<const unsigned char *>(
-      mmap(nullptr, data_size, PROT_READ, MAP_PRIVATE, fd, 0));
-  MACE_CHECK(model_data != MAP_FAILED, "Failed to map model data file ",
-             model_data_file, ", error code: ", strerror(errno));
+  unsigned char* model_data = new unsigned char[data_size];
 
-  int ret = close(fd);
-  MACE_CHECK(ret == 0, "Failed to close model data file ",
-             model_data_file, ", error code: ", strerror(errno));
+  MACE_CHECK(data_size <= length, "error model file size");
+
+  fd.read((char*)model_data, data_size);
+
+  //int fd = open(model_data_file.c_str(), O_RDONLY);
+  //MACE_CHECK(fd >= 0, "Failed to open model data file ",
+  //           model_data_file, ", error code: ", strerror(errno));
+
+  //const unsigned char *model_data = static_cast<const unsigned char *>(
+  //    mmap(nullptr, data_size, PROT_READ, MAP_PRIVATE, fd, 0));
+  //MACE_CHECK(model_data != MAP_FAILED, "Failed to map model data file ",
+  //           model_data_file, ", error code: ", strerror(errno));
+
+  //int ret = close(fd);
+  //MACE_CHECK(ret == 0, "Failed to close model data file ",
+  //           model_data_file, ", error code: ", strerror(errno));
 
   return model_data;
 }
 
 void UnloadModelData(const unsigned char *model_data,
                      const size_t &data_size) {
-  int ret = munmap(const_cast<unsigned char *>(model_data),
-                   data_size);
-  MACE_CHECK(ret == 0, "Failed to unmap model data file, error code: ",
-             strerror(errno));
+  delete[] model_data;
+
+  //int ret = munmap(const_cast<unsigned char *>(model_data),
+  //                 data_size);
+  //MACE_CHECK(ret == 0, "Failed to unmap model data file, error code: ",
+  //           strerror(errno));
 }
 
 MaceStatus CreateMaceEngineFromProto(

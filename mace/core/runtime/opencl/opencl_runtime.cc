@@ -12,9 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef MACE_ENABLE_OPENCL
-
-#include "mace/core/runtime/opencl/opencl_runtime.h"
 
 #include <sys/stat.h>
 
@@ -27,13 +24,24 @@
 #include <utility>
 
 #include "mace/public/mace_runtime.h"
+#include "mace/utils/logging.h"
+
+#ifdef MACE_ENABLE_OPENCL
 #include "mace/core/macros.h"
 #include "mace/core/file_storage.h"
 #include "mace/core/runtime/opencl/opencl_extension.h"
 #include "mace/public/mace.h"
 #include "mace/utils/tuner.h"
+#include "mace/core/runtime/opencl/opencl_runtime.h"
+#endif
 
 namespace mace {
+
+#ifndef MACE_ENABLE_OPENCL
+void SetGPUHints(GPUPerfHint gpu_perf_hint, GPUPriorityHint gpu_priority_hint) {
+  LOG(WARNING) << "no opencl runtime. do nothing";
+}
+#else
 
 extern const std::map<std::string, std::vector<unsigned char>>
     kEncryptedProgramMap;
@@ -740,6 +748,6 @@ bool OpenCLRuntime::is_profiling_enabled() const {
   return is_profiling_enabled_;
 }
 
-}  // namespace mace
-
 #endif
+
+}  // namespace mace
