@@ -14,9 +14,10 @@
 * Windows
   * use cmake
   * builed pass in windows(vs2015)
+  * USE_OPENCL in cmake config
 
 ## To do
 * enable shared libraries in windows
-* enable openmp/opencl in windows
+* enable openmp in windows
 * builed pass in xcode(mac & ios)
 * use cmake in all platforms(win/linux/mac/android)

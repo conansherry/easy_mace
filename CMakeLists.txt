@@ -25,6 +25,7 @@ endif()
 
 # BEGIN OPTION
 
+EASY_MACE_OPTION(USE_OPENCL                   "-DMACE_ENABLE_OPENCL"               OFF)
 #EASY_MACE_OPTION(BUILD_SHARED_LIBRARIES       "Build shared library"               OFF)
 EASY_MACE_OPTION(BUILD_IOS_FRAMEWORK          "Build ios framework"                OFF)
 EASY_MACE_OPTION(BUILD_TESTS                  "Build tests application"            OFF)
@@ -54,6 +55,13 @@ else()
   set(EASY_MACE_LIBTYPE STATIC)
 endif()
 
+# enable opencl
+if(USE_OPENCL)
+  add_definitions(-DMACE_ENABLE_OPENCL)
+  find_package(OpenCL REQUIRED)
+  list(APPEND THIRD_PARTY_DEPENDENCIES ${OpenCL_LIBRARY})
+endif()
+
 if(WIN32)
   add_definitions(-D_CRT_SECURE_NO_WARNINGS)
   add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE)
@@ -64,7 +72,7 @@ endif()
 include_directories("./")
 include_directories("external/protobuf-3.4.0/src")
 include_directories("external/opencl")
-include_directories("external/opencl/opencl20")
+include_directories("external/opencl/opencl11")
 include_directories("external/half")
 
 # find sources

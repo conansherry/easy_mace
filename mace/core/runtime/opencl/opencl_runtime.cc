@@ -23,6 +23,7 @@
 #include <vector>
 #include <utility>
 
+#include "mace/core/cross_platform_utils.h"
 #include "mace/public/mace_runtime.h"
 #include "mace/utils/logging.h"
 
@@ -90,6 +91,7 @@ const std::string OpenCLErrorToString(cl_int error) {
       return "CL_MISALIGNED_SUB_BUFFER_OFFSET";
     case CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST:
       return "CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST";
+#if CL_HPP_TARGET_OPENCL_VERSION > 110
     case CL_COMPILE_PROGRAM_FAILURE:
       return "CL_COMPILE_PROGRAM_FAILURE";
     case CL_LINKER_NOT_AVAILABLE:
@@ -100,6 +102,7 @@ const std::string OpenCLErrorToString(cl_int error) {
       return "CL_DEVICE_PARTITION_FAILED";
     case CL_KERNEL_ARG_INFO_NOT_AVAILABLE:
       return "CL_KERNEL_ARG_INFO_NOT_AVAILABLE";
+#endif
     case CL_INVALID_VALUE:
       return "CL_INVALID_VALUE";
     case CL_INVALID_DEVICE_TYPE:
@@ -170,6 +173,7 @@ const std::string OpenCLErrorToString(cl_int error) {
       return "CL_INVALID_GLOBAL_WORK_SIZE";
     case CL_INVALID_PROPERTY:
       return "CL_INVALID_PROPERTY";
+#if CL_HPP_TARGET_OPENCL_VERSION > 110
     case CL_INVALID_IMAGE_DESCRIPTOR:
       return "CL_INVALID_IMAGE_DESCRIPTOR";
     case CL_INVALID_COMPILER_OPTIONS:
@@ -178,10 +182,13 @@ const std::string OpenCLErrorToString(cl_int error) {
       return "CL_INVALID_LINKER_OPTIONS";
     case CL_INVALID_DEVICE_PARTITION_COUNT:
       return "CL_INVALID_DEVICE_PARTITION_COUNT";
+#endif
+#if CL_HPP_TARGET_OPENCL_VERSION > 120
     case CL_INVALID_PIPE_SIZE:
       return "CL_INVALID_PIPE_SIZE";
     case CL_INVALID_DEVICE_QUEUE:
       return "CL_INVALID_DEVICE_QUEUE";
+#endif
     default:
       return MakeString("UNKNOWN: ", error);
   }
@@ -324,6 +331,8 @@ void OpenCLRuntime::ConfigureOpenCLBinaryPath(
   }
 }
 
+extern std::shared_ptr<KVStorageFactory> kStorageFactory;
+
 OpenCLRuntime::OpenCLRuntime():
     precompiled_binary_storage_(nullptr),
     cache_storage_(nullptr),
@@ -414,7 +423,6 @@ OpenCLRuntime::OpenCLRuntime():
                                                       &err);
   MACE_CHECK_CL_SUCCESS(err);
 
-  extern std::shared_ptr<KVStorageFactory> kStorageFactory;
   if (kStorageFactory != nullptr) {
     cache_storage_ =
         kStorageFactory->CreateStorage(kPrecompiledProgramFileName);

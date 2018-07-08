@@ -29,6 +29,9 @@
 
 namespace mace {
 
+extern const std::map<std::string, std::vector<unsigned int>>
+    kTuningParamsData;
+
 template <typename param_type>
 class Tuner {
  public:
@@ -116,9 +119,8 @@ class Tuner {
     }
   }
 
+
   inline void ReadRunParamters() {
-    extern const std::map<std::string, std::vector<unsigned int>>
-        kTuningParamsData;
     if (!kTuningParamsData.empty()) {
       for (auto it = kTuningParamsData.begin(); it != kTuningParamsData.end();
            ++it) {

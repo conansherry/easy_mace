@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
     std::string pb_file_path = "F:/workspace/caffe2-prebuild/test_model/mobilenet_v1.pb";
     std::string data_file_path = "F:/workspace/caffe2-prebuild/test_model/mobilenet_v1.data";
 
-    DeviceType device_type = DeviceType::CPU;
+    DeviceType device_type = DeviceType::GPU;
 
     // config runtime
     mace::SetOpenMPThreadPolicy(1, static_cast<CPUAffinityPolicy>(0));
