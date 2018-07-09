@@ -123,7 +123,7 @@ if(BUILD_IOS_FRAMEWORK)
   easy_mace_set_framework(${libname})
 endif()
 
-list(APPEND THIRD_PARTY_DEPENDENCIES "easy_mace")
+list(APPEND THIRD_PARTY_DEPENDENCIES "mace")
 
 if(BUILD_TESTS AND NOT BUILD_IOS_FRAMEWORK)
   easy_mace_subdirlist(test_subdirs "tests")

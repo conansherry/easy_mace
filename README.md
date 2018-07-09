@@ -14,13 +14,17 @@
 * Windows
   * use cmake
   * builed pass in windows(vs2015)
-  * USE_OPENCL in cmake config
+  * can USE_OPENCL in cmake config
 * MacOS
   * use cmake
-  * USE_OPENCL in cmake config(link with OpenCL.framework)
+  * can USE_OPENCL in cmake config(link with OpenCL.framework)
+* IOS(not test)
+  * use cmake.
+  * need to enable BUILD_IOS_FRAMEWORK in cmake config.
+  * can USE_NEON in cmake config
+  * generate two framework after Product/Archive
 
 ## To do
 * enable shared libraries in windows
 * enable openmp in windows/mac/ios
-* builed pass in xcode(mac & ios)
 * use cmake in all platforms(win/linux/mac/android)
