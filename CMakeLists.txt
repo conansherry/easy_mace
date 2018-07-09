@@ -101,7 +101,7 @@ easy_mace_buildlibrary(${libname} ${EASY_MACE_LIBTYPE} SOURCES ${EASY_MACE_ALL_H
 if(USE_ACCELERATE)
   easy_mace_add_framework(Accelerate ${libname})
 endif()
-if(USE_OPENCL)
+if(USE_OPENCL AND APPLE)
   easy_mace_add_framework(OpenCL ${libname})
 endif()
 if(BUILD_IOS_FRAMEWORK)

@@ -31,7 +31,7 @@ static bool ReadBinaryFile(std::vector<unsigned char> *data,
 
 int main(int argc, char* argv[])
 {
-    std::string base_dir = "/Users/qinweining/workspace/test_model";
+    std::string base_dir = "F:/workspace/caffe2-prebuild/test_model";
     std::string pb_file_path = base_dir + "/mobilenet_v1.pb";
     std::string data_file_path = base_dir + "/mobilenet_v1.data";
 
