@@ -15,7 +15,11 @@
 #ifndef MACE_UTILS_MEMORY_LOGGING_H_
 #define MACE_UTILS_MEMORY_LOGGING_H_
 
-#ifndef __hexagon__
+#if defined __MACH__ && defined __APPLE__
+#include <cstdio>
+#include <cstdlib>
+#include <memory>
+#elif !defined(__hexagon__)
 #include <malloc.h>
 #endif
 #include <string>

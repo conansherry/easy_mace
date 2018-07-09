@@ -26,6 +26,9 @@
 #undef min
 #undef max
 #undef abs
+#elif defined __MACH__ && defined __APPLE__
+#include <sys/time.h>
+#include <mach/mach_time.h>
 #else
 #include <sys/time.h>
 #endif
@@ -39,10 +42,17 @@ inline int64_t NowMicros() {
   LARGE_INTEGER counter;
   QueryPerformanceCounter(&counter);
   return (int64_t)counter.QuadPart;
+#elif defined __linux || defined __linux__
+    struct timespec tp;
+    clock_gettime(CLOCK_MONOTONIC, &tp);
+    return (int64_t)tp.tv_sec*1000000000 + tp.tv_nsec;
+#elif defined __MACH__ && defined __APPLE__
+    return (int64_t)mach_absolute_time();
 #else
-  struct timeval tv;
-  gettimeofday(&tv, nullptr);
-  return static_cast<int64_t>(tv.tv_sec) * 1000000 + tv.tv_usec;
+    struct timeval tv;
+    struct timezone tz;
+    gettimeofday( &tv, &tz );
+    return (int64_t)tv.tv_sec*1000000 + tv.tv_usec;
 #endif
 }
 

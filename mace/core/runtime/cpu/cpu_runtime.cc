@@ -102,7 +102,7 @@ int GetCPUMaxFreq(int cpu_id) {
 }
 
 void SetThreadAffinity(cpu_set_t mask) {
-#ifdef _WIN32
+#if defined _WIN32 || defined __MACH__ || defined __APPLE__
 #else
 #if defined(__ANDROID__)
   pid_t pid = gettid();

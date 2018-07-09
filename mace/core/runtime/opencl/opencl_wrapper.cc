@@ -20,7 +20,7 @@
 #include <vector>
 #include "mace/utils/logging.h"
 
-#ifdef _WIN32
+#if !defined __ANDROID__
 
 namespace mace
 {
