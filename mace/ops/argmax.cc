@@ -12,25 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef MACE_CORE_RUNTIME_CPU_CPU_RUNTIME_H_
-#define MACE_CORE_RUNTIME_CPU_CPU_RUNTIME_H_
-
-#include <vector>
-
-#include "mace/public/mace.h"
-#include "mace/public/mace_runtime.h"
+#include "mace/ops/argmax.h"
 
 namespace mace {
+namespace ops {
 
-MaceStatus GetCPUBigLittleCoreIDs(std::vector<int> *big_core_ids,
-                                  std::vector<int> *little_core_ids);
+void Register_ArgMax(OperatorRegistry *op_registry) {
+  MACE_REGISTER_OPERATOR(op_registry, OpKeyBuilder("ArgMax")
+                                          .Device(DeviceType::CPU)
+                                          .TypeConstraint<float>("T")
+                                          .Build(),
+                         ArgMaxOp<DeviceType::CPU, float>);
+}
 
-MaceStatus SetOpenMPThreadsAndAffinityCPUs(int omp_num_threads,
-                                     const std::vector<int> &cpu_ids);
-
-MaceStatus SetOpenMPThreadsAndAffinityPolicy(int omp_num_threads_hint,
-                                             CPUAffinityPolicy policy);
-
+}  // namespace ops
 }  // namespace mace
-
-#endif  // MACE_CORE_RUNTIME_CPU_CPU_RUNTIME_H_

@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
         auto buffer_in = std::shared_ptr<float>(new float[input_size], std::default_delete<float[]>());
         for (int j = 0; j < input_size; ++j)
         {
-            buffer_in.get()[j] = 0.2f;
+            buffer_in.get()[j] = 1.f;
         }
         inputs[input_names[i]] = mace::MaceTensor(input_shapes[i], buffer_in);
     }

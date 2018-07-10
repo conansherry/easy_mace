@@ -80,7 +80,8 @@ class FileStorageFactory : public KVStorageFactory {
 void SetKVStorageFactory(std::shared_ptr<KVStorageFactory> storage_factory);
 
 // Just call once. (Not thread-safe)
-// Set paths of OpenCL Compiled Binary file if you use gpu of specific soc.
+// Set paths of Generated OpenCL Compiled Kernel Binary file (not libOpenCL.so)
+// if you use gpu of specific soc.
 // Using OpenCL binary will speed up the initialization.
 // OpenCL binary is corresponding to the OpenCL Driver version,
 // you should update the binary when OpenCL Driver changed.
@@ -118,7 +119,7 @@ MaceStatus SetOpenMPThreadPolicy(int num_threads_hint,
 // This function may not work well on some chips (e.g. MTK). Setting thread
 // affinity to offline cores may run very slow or unexpectedly. In such cases,
 // please use SetOpenMPThreadPolicy with default policy instead.
-void SetOpenMPThreadAffinity(int num_threads, const std::vector<int> &cpu_ids);
+MaceStatus SetOpenMPThreadAffinity(int num_threads, const std::vector<int> &cpu_ids);
 
 // Get ARM big.LITTLE configuration.
 //
