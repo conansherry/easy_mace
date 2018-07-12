@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef MACE_ENABLE_OPENCL
+
 #include "mace/kernels/reduce_mean.h"
 #include "mace/core/runtime/opencl/cl2_header.h"
 #include "mace/core/runtime/opencl/opencl_runtime.h"
@@ -159,3 +161,5 @@ template struct ReduceMeanFunctor<DeviceType::GPU, float>;
 template struct ReduceMeanFunctor<DeviceType::GPU, half>;
 }  // namespace kernels
 }  // namespace mace
+
+#endif
