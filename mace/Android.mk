@@ -61,15 +61,15 @@ LOCAL_SRC_FILES += $(SOURCE_LIST:$(LOCAL_PATH)/%=%)
 SOURCE_LIST := $(wildcard $(LOCAL_PATH)/codegen/version/*.cc)
 LOCAL_SRC_FILES += $(SOURCE_LIST:$(LOCAL_PATH)/%=%)
 
-# codegen/tuning
-SOURCE_LIST := $(wildcard $(LOCAL_PATH)/codegen/tuning/*.cc)
-LOCAL_SRC_FILES += $(SOURCE_LIST:$(LOCAL_PATH)/%=%)
-
 # codegen/opencl
 ifeq ($(USE_OPENCL), on)
     SOURCE_LIST := $(wildcard $(LOCAL_PATH)/codegen/opencl/*.cc)
     LOCAL_SRC_FILES += $(SOURCE_LIST:$(LOCAL_PATH)/%=%)
 endif
+
+# libmace
+SOURCE_LIST := $(wildcard $(LOCAL_PATH)/libmace/*.cc)
+LOCAL_SRC_FILES += $(SOURCE_LIST:$(LOCAL_PATH)/%=%)
 
 LOCAL_CFLAGS += -Os -Wall -fPIC
 LOCAL_CPPFLAGS += -Os -std=c++11 -Wall -fPIC -D__STDC_LIMIT_MACROS -fexceptions
