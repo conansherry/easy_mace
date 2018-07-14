@@ -87,6 +87,12 @@ void SetKVStorageFactory(std::shared_ptr<KVStorageFactory> storage_factory);
 // you should update the binary when OpenCL Driver changed.
 void SetOpenCLBinaryPaths(const std::vector<std::string> &paths);
 
+// Just call once. (Not thread-safe)
+// Set the path of Generated OpenCL parameter file
+// if you use gpu for specific soc.
+// The parameters is the local work group size tuned for specific SOC, which
+// may be faster than the general parameters.
+void SetOpenCLParameterPath(const std::string &path);
 // Set GPU hints, currently only supports Adreno GPU.
 //
 // Caution: this function may hurt performance if improper parameters provided.

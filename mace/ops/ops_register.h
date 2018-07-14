@@ -12,17 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// This is a generated file. DO NOT EDIT!
+#ifndef MACE_OPS_OPS_REGISTER_H_
+#define MACE_OPS_OPS_REGISTER_H_
 
-#include <map>
-#include <string>
-#include <vector>
+#include "mace/core/operator.h"
 
 namespace mace {
 
-extern const std::map<std::string, std::vector<unsigned int> > kTuningParamsData =
-{
-  
+class OperatorRegistry : public OperatorRegistryBase {
+ public:
+  OperatorRegistry();
+  ~OperatorRegistry() = default;
 };
 
 }  // namespace mace
+
+#endif  // MACE_OPS_OPS_REGISTER_H_

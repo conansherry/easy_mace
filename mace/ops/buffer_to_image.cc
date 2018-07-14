@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef MACE_ENABLE_OPENCL
-
 #include "mace/ops/buffer_to_image.h"
 
 namespace mace {
 namespace ops {
 
-void Register_BufferToImage(OperatorRegistry *op_registry) {
+void Register_BufferToImage(OperatorRegistryBase *op_registry) {
   MACE_REGISTER_OPERATOR(op_registry, OpKeyBuilder("BufferToImage")
                                           .Device(DeviceType::GPU)
                                           .TypeConstraint<float>("T")
@@ -35,5 +33,3 @@ void Register_BufferToImage(OperatorRegistry *op_registry) {
 
 }  // namespace ops
 }  // namespace mace
-
-#endif

@@ -1,7 +1,7 @@
 # easy mace (easy Mobile AI Compute Engine)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 * Thanks to [XiaoMI/mace](https://github.com/XiaoMi/mace)
-* easy mace update to https://github.com/XiaoMi/mace/tree/4c24c63149afdc1be79caccf9354a3b4bcdc61a4
+* easy mace update to https://github.com/XiaoMi/mace/tree/17ac111e7cd32867f0e2b63e58d6c5f592c258e3
 
 ## Getting started
 

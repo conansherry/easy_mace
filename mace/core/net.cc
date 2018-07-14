@@ -22,7 +22,7 @@
 
 namespace mace {
 
-NetBase::NetBase(const std::shared_ptr<const OperatorRegistry> op_registry,
+NetBase::NetBase(const std::shared_ptr<const OperatorRegistryBase> op_registry,
                  const std::shared_ptr<const NetDef> net_def,
                  Workspace *ws,
                  DeviceType type)
@@ -31,7 +31,8 @@ NetBase::NetBase(const std::shared_ptr<const OperatorRegistry> op_registry,
   MACE_UNUSED(type);
 }
 
-SerialNet::SerialNet(const std::shared_ptr<const OperatorRegistry> op_registry,
+SerialNet::SerialNet(
+    const std::shared_ptr<const OperatorRegistryBase> op_registry,
                      const std::shared_ptr<const NetDef> net_def,
                      Workspace *ws,
                      DeviceType type,
@@ -130,7 +131,7 @@ MaceStatus SerialNet::Run(RunMetadata *run_metadata) {
 }
 
 std::unique_ptr<NetBase> CreateNet(
-    const std::shared_ptr<const OperatorRegistry> op_registry,
+    const std::shared_ptr<const OperatorRegistryBase> op_registry,
     const NetDef &net_def,
     Workspace *ws,
     DeviceType type,
@@ -140,7 +141,7 @@ std::unique_ptr<NetBase> CreateNet(
 }
 
 std::unique_ptr<NetBase> CreateNet(
-    const std::shared_ptr<const OperatorRegistry> op_registry,
+    const std::shared_ptr<const OperatorRegistryBase> op_registry,
     const std::shared_ptr<const NetDef> net_def,
     Workspace *ws,
     DeviceType type,

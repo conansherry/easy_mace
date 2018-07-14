@@ -38,26 +38,13 @@
 
 namespace mace {
 
-#ifndef MACE_ENABLE_OPENCL
-void SetGPUHints(GPUPerfHint gpu_perf_hint, GPUPriorityHint gpu_priority_hint) {
-  LOG(WARNING) << "no opencl runtime. do nothing";
-}
-#else
+std::shared_ptr<KVStorageFactory> kStorageFactory = nullptr;
+std::string kOpenCLParameterPath;  // NOLINT(runtime/string)
+
+#ifdef MACE_ENABLE_OPENCL
 
 extern const std::map<std::string, std::vector<unsigned char>>
     kEncryptedProgramMap;
-
-void SetGPUHints(GPUPerfHint gpu_perf_hint, GPUPriorityHint gpu_priority_hint) {
-  VLOG(1) << "Set GPU configurations, gpu_perf_hint: " << gpu_perf_hint
-          << ", gpu_priority_hint: " << gpu_priority_hint;
-  OpenCLRuntime::Configure(gpu_perf_hint, gpu_priority_hint);
-}
-
-// Set OpenCL Compiled Binary paths, just call once. (Not thread-safe)
-void SetOpenCLBinaryPaths(const std::vector<std::string> &paths) {
-  OpenCLRuntime::ConfigureOpenCLBinaryPath(paths);
-}
-
 
 const std::string OpenCLErrorToString(cl_int error) {
   switch (error) {
@@ -330,8 +317,6 @@ void OpenCLRuntime::ConfigureOpenCLBinaryPath(
                  << MakeString(paths);
   }
 }
-
-extern std::shared_ptr<KVStorageFactory> kStorageFactory;
 
 OpenCLRuntime::OpenCLRuntime():
     precompiled_binary_storage_(nullptr),
