@@ -6,7 +6,7 @@ LOCAL_MODULE := easy_mace
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../external/half \
                     $(LOCAL_PATH)/../external/opencl \
-                    $(LOCAL_PATH)/../external/opencl/opencl11 \
+                    $(LOCAL_PATH)/../external/opencl/opencl12 \
                     $(LOCAL_PATH)/..
                     
 # core
