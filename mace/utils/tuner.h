@@ -137,7 +137,7 @@ class Tuner {
           for (int i = 0; i < params_count; ++i) {
             ifs.read(reinterpret_cast<char *>(&params[i]),
                      sizeof(unsigned int));
-      }
+          }
           param_table_.emplace(key, params);
         }
         ifs.close();
