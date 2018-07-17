@@ -93,7 +93,7 @@ endif()
 include_directories("./")
 include_directories("external/protobuf-3.4.0/src")
 include_directories("external/opencl")
-include_directories("external/opencl/opencl11")
+include_directories("external/opencl/opencl12")
 include_directories("external/half")
 
 # find sources
