@@ -38,7 +38,7 @@
 
 namespace mace {
 
-std::shared_ptr<KVStorageFactory> kStorageFactory = nullptr;
+extern std::shared_ptr<KVStorageFactory> kStorageFactory;
 std::string kOpenCLParameterPath;  // NOLINT(runtime/string)
 
 #ifdef MACE_ENABLE_OPENCL
@@ -685,6 +685,12 @@ void OpenCLRuntime::GetCallStats(const cl::Event &event, CallStats *stats) {
 uint64_t OpenCLRuntime::GetDeviceMaxWorkGroupSize() {
   uint64_t size = 0;
   device_->getInfo(CL_DEVICE_MAX_WORK_GROUP_SIZE, &size);
+  return size;
+}
+
+uint64_t OpenCLRuntime::GetDeviceMaxMemAllocSize() {
+  uint64_t size = 0;
+  device_->getInfo(CL_DEVICE_MAX_MEM_ALLOC_SIZE, &size);
   return size;
 }
 
