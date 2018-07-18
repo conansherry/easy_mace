@@ -15,5 +15,5 @@
 // This is a generated file. DO NOT EDIT!
 
 namespace mace {
-const char *MaceVersion() { return "MACEVER-v0.8.1-131-g17ac111" + 8; }
+const char *MaceVersion() { return "MACEVER-v0.8.1-148-g15a34cc" + 8; }
 }  // namespace mace
