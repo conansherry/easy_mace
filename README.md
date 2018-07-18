@@ -3,8 +3,7 @@
 * Thanks to [XiaoMI/mace](https://github.com/XiaoMi/mace)
 * easy mace update to [15a34cc2bb208de7298af1ae89e18fdc861f4a0f](https://github.com/XiaoMi/mace/tree/15a34cc2bb208de7298af1ae89e18fdc861f4a0f) (support caffe deconv)
 
-## Getting started
-
+## How to build
 * Android
   * use ndk-build
   * three switch in easy_mace/mace/Application.mk
@@ -24,6 +23,9 @@
   * need to enable BUILD_IOS_FRAMEWORK in cmake config.
   * can USE_NEON in cmake config
   * generate two framework after Product/Archive
+  
+## Convert caffe model
+* use [convert_model](https://github.com/conansherry/convert_model) tool
 
 ## To do
 * enable shared libraries in windows

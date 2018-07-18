@@ -14,6 +14,7 @@
 
 #if defined(MACE_ENABLE_OPENCL)
 
+#include "mace/core/runtime/opencl/cl2_header.h"
 #include "mace/core/runtime/opencl/opencl_wrapper.h"
 #include <CL/opencl.h>
 #include <string>
@@ -256,8 +257,10 @@ class OpenCLLibraryImpl final {
   MACE_CL_DEFINE_FUNC_PTR(clReleaseMemObject);
   MACE_CL_DEFINE_FUNC_PTR(clGetDeviceInfo);
   MACE_CL_DEFINE_FUNC_PTR(clGetDeviceIDs);
+#if CL_HPP_TARGET_OPENCL_VERSION > 110
   MACE_CL_DEFINE_FUNC_PTR(clRetainDevice);
   MACE_CL_DEFINE_FUNC_PTR(clReleaseDevice);
+#endif
   MACE_CL_DEFINE_FUNC_PTR(clRetainEvent);
   MACE_CL_DEFINE_FUNC_PTR(clGetKernelWorkGroupInfo);
   MACE_CL_DEFINE_FUNC_PTR(clGetEventInfo);
@@ -386,8 +389,10 @@ void *OpenCLLibraryImpl::LoadFromPath(const std::string &path) {
   MACE_CL_ASSIGN_FROM_DLSYM(clReleaseMemObject);
   MACE_CL_ASSIGN_FROM_DLSYM(clGetDeviceInfo);
   MACE_CL_ASSIGN_FROM_DLSYM(clGetDeviceIDs);
+#if CL_HPP_TARGET_OPENCL_VERSION > 110
   MACE_CL_ASSIGN_FROM_DLSYM(clRetainDevice);
   MACE_CL_ASSIGN_FROM_DLSYM(clReleaseDevice);
+#endif
   MACE_CL_ASSIGN_FROM_DLSYM(clRetainEvent);
   MACE_CL_ASSIGN_FROM_DLSYM(clGetKernelWorkGroupInfo);
   MACE_CL_ASSIGN_FROM_DLSYM(clGetEventInfo);
