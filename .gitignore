@@ -2,3 +2,4 @@
 /external/protobuf-3.4.0/obj
 /build
 /build_ios
+/mace/codegen/mace_dir.h
