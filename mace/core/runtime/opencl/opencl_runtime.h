@@ -35,6 +35,8 @@ enum GPUType {
   QUALCOMM_ADRENO,
   MALI,
   PowerVR,
+  Intel,
+  Nvidia,
   UNKNOWN,
 };
 
@@ -43,6 +45,7 @@ enum OpenCLVersion {
   CL_VER_1_1,
   CL_VER_1_2,
   CL_VER_2_0,
+  CL_VER_2_1,
 };
 
 

@@ -108,6 +108,12 @@ MaceStatus BufferToImageFunctor<DeviceType::GPU, T>::operator()(
     }
   }
 
+#ifdef MACE_DEBUG_OPENCL
+  built_options.emplace("-g");
+  std::string opencl_file = "\"" MACE_DIR "/mace/kernels/opencl/cl/buffer_to_image.cl\"";
+  built_options.emplace("-s " + opencl_file);
+#endif
+
   auto b2f_kernel = runtime->BuildKernel("buffer_to_image",
                                          obfuscated_kernel_name, built_options);
 

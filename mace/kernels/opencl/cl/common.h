@@ -15,7 +15,9 @@
 #ifndef MACE_KERNELS_OPENCL_CL_COMMON_H_
 #define MACE_KERNELS_OPENCL_CL_COMMON_H_
 
+#ifdef __ANDROID__
 #pragma OPENCL EXTENSION cl_khr_fp16 : enable
+#endif
 
 #define VEC_DATA_TYPE_STR(data_type, size) data_type##size
 #define VEC_DATA_TYPE(data_type, size) VEC_DATA_TYPE_STR(data_type, size)

@@ -31,9 +31,9 @@ static bool ReadBinaryFile(std::vector<unsigned char> *data,
 
 int main(int argc, char* argv[])
 {
-    std::string base_dir = "F:/workspace/caffe2-prebuild/test_model";
-    std::string pb_file_path = base_dir + "/mobilenet_v1.pb";
-    std::string data_file_path = base_dir + "/mobilenet_v1.data";
+    std::string base_dir = "F:/workspace/XiaoMI/convert_model/builds/mmcv_model/model";
+    std::string pb_file_path = base_dir + "/hand_pose_21pt.pb";
+    std::string data_file_path = base_dir + "/hand_pose_21pt.data";
 
     DeviceType device_type = DeviceType::GPU;
 
@@ -53,7 +53,8 @@ int main(int argc, char* argv[])
 
     // 3. Define the input and output tensor names.
     std::vector<std::string> input_names = { "data" };
-    std::vector<std::string> output_names = { "prob" };
+    //std::vector<std::string> output_names = { "upsampling0" };
+    std::vector<std::string> output_names = { "P2_aggregate" };
 
     // Create Engine
     std::shared_ptr<mace::MaceEngine> engine;
@@ -81,8 +82,9 @@ int main(int argc, char* argv[])
 
     std::map<std::string, mace::MaceTensor> inputs;
     std::map<std::string, mace::MaceTensor> outputs;
-    std::vector<std::vector<int64_t>> input_shapes = { { 1, 160, 160, 3 } };
-    std::vector<std::vector<int64_t>> output_shapes = { { 1, 1, 1, 1000 } };
+    std::vector<std::vector<int64_t>> input_shapes = { { 1, 256, 144, 3 } };
+    //std::vector<std::vector<int64_t>> output_shapes = { { 1, 32, 18, 64 } };
+    std::vector<std::vector<int64_t>> output_shapes = { { 1, 32, 18, 22 } };
     for (size_t i = 0; i < input_count; ++i)
     {
         // Allocate input and output
@@ -90,7 +92,7 @@ int main(int argc, char* argv[])
         auto buffer_in = std::shared_ptr<float>(new float[input_size], std::default_delete<float[]>());
         for (int j = 0; j < input_size; ++j)
         {
-            buffer_in.get()[j] = 1.f;
+            buffer_in.get()[j] = 128.f;
         }
         inputs[input_names[i]] = mace::MaceTensor(input_shapes[i], buffer_in);
     }
@@ -115,9 +117,15 @@ int main(int argc, char* argv[])
 
         engine->Run(inputs, &outputs);
 
-        for (int j = 0; j < 10; ++j)
+        for (auto &kv : outputs)
         {
-            printf("--> %f\n", outputs["prob"].data().get()[j]);
+            printf("--> %f\n", kv.second.data().get()[0]);
+            //std::ofstream fout("F:/workspace/XiaoMI/tmp/test_conv/hand_mace.txt");
+            //for (int j = 0; j < 32 * 18 * 22; j++)
+            //{
+            //    fout << kv.second.data().get()[j] << " " << std::endl;
+            //}
+            //fout.close();
         }
 
         if (i >= 2)
@@ -131,6 +139,8 @@ int main(int argc, char* argv[])
             total_time += cost_time;
             total_count++;
         }
+
+        //system("pause");
     }
 
     printf("mace name = %s, min = %f, max = %f, avg = %f\n", test_name.c_str(), min_time, max_time, total_time / total_count);

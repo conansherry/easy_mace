@@ -32,6 +32,7 @@ extern void Register_Crop(OperatorRegistryBase *op_registry);
 extern void Register_Deconv2D(OperatorRegistryBase *op_registry);
 extern void Register_DepthToSpace(OperatorRegistryBase *op_registry);
 extern void Register_DepthwiseConv2d(OperatorRegistryBase *op_registry);
+extern void Register_DepthwiseDeconv2d(OperatorRegistryBase *op_registry);
 extern void Register_Dequantize(OperatorRegistryBase *op_registry);
 extern void Register_Eltwise(OperatorRegistryBase *op_registry);
 extern void Register_FoldedBatchNorm(OperatorRegistryBase *op_registry);
@@ -83,6 +84,7 @@ OperatorRegistry::OperatorRegistry() : OperatorRegistryBase() {
   ops::Register_Deconv2D(this);
   ops::Register_DepthToSpace(this);
   ops::Register_DepthwiseConv2d(this);
+  ops::Register_DepthwiseDeconv2d(this);
   ops::Register_Dequantize(this);
   ops::Register_Eltwise(this);
   ops::Register_FoldedBatchNorm(this);

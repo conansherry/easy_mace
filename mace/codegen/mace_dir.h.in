@@ -1,0 +1,5 @@
+#ifndef MACE_DIR
+
+#define MACE_DIR "@MACE_DIR@"
+
+#endif

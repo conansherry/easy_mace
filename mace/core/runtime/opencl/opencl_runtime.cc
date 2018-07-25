@@ -36,6 +36,8 @@
 #include "mace/core/runtime/opencl/opencl_runtime.h"
 #endif
 
+#include <iostream>
+
 namespace mace {
 
 extern std::shared_ptr<KVStorageFactory> kStorageFactory;
@@ -235,6 +237,8 @@ GPUType ParseGPUType(const std::string &device_name) {
   constexpr const char *kQualcommAdrenoGPUStr = "QUALCOMM Adreno(TM)";
   constexpr const char *kMaliGPUStr = "Mali";
   constexpr const char *kPowerVRGPUStr = "PowerVR";
+  constexpr const char *kIntel = "Intel";
+  constexpr const char *kNvidia = "GeForce";
 
   if (device_name == kQualcommAdrenoGPUStr) {
     return GPUType::QUALCOMM_ADRENO;
@@ -242,6 +246,10 @@ GPUType ParseGPUType(const std::string &device_name) {
     return GPUType::MALI;
   } else if (device_name.find(kPowerVRGPUStr) != std::string::npos) {
     return GPUType::PowerVR;
+  } else if (device_name.find(kIntel) != std::string::npos) {
+      return GPUType::Intel;
+  } else if (device_name.find(kNvidia) != std::string::npos) {
+      return GPUType::Nvidia;
   } else {
     return GPUType::UNKNOWN;
   }
@@ -329,7 +337,11 @@ OpenCLRuntime::OpenCLRuntime():
   if (all_platforms.size() == 0) {
     LOG(FATAL) << "No OpenCL platforms found";
   }
+#ifdef MACE_DEBUG_OPENCL
+  cl::Platform default_platform = all_platforms[1];
+#else
   cl::Platform default_platform = all_platforms[0];
+#endif
   std::stringstream ss;
   ss << default_platform.getInfo<CL_PLATFORM_NAME>()
      << ", " << default_platform.getInfo<CL_PLATFORM_PROFILE>() << ", "
@@ -347,7 +359,11 @@ OpenCLRuntime::OpenCLRuntime():
   bool gpu_detected = false;
   device_ = std::make_shared<cl::Device>();
   for (auto device : all_devices) {
-    if (device.getInfo<CL_DEVICE_TYPE>() == CL_DEVICE_TYPE_GPU) {
+#ifdef MACE_DEBUG_OPENCL
+  if (device.getInfo<CL_DEVICE_TYPE>() == CL_DEVICE_TYPE_CPU) {
+#else
+  if (device.getInfo<CL_DEVICE_TYPE>() == CL_DEVICE_TYPE_GPU) {
+#endif
       *device_ = device;
       gpu_detected = true;
 
@@ -628,6 +644,9 @@ void OpenCLRuntime::BuildProgram(const std::string &program_name,
   std::string build_options_str =
       build_options + " -Werror -cl-mad-enable -cl-fast-relaxed-math";
   // Build flow: cache -> precompiled binary -> source
+#ifdef MACE_DEBUG_OPENCL
+  BuildProgramFromSource(program_name, built_program_key, build_options_str, program);
+#else
   bool ret = BuildProgramFromCache(built_program_key,
                                    build_options_str, program);
   if (!ret) {
@@ -638,6 +657,7 @@ void OpenCLRuntime::BuildProgram(const std::string &program_name,
                              build_options_str, program);
     }
   }
+#endif
 }
 
 cl::Kernel OpenCLRuntime::BuildKernel(
@@ -725,8 +745,10 @@ OpenCLVersion OpenCLRuntime::ParseDeviceVersion(
   // OpenCL<space><major_version.minor_version><space>
   // <vendor-specific information>
   auto words = Split(device_version, ' ');
-  if (words[1] == "2.0") {
-    return OpenCLVersion::CL_VER_2_0;
+  if (words[1] == "2.1") {
+    return OpenCLVersion::CL_VER_2_1;
+  } else if(words[1] == "2.0") {
+      return OpenCLVersion::CL_VER_2_0;
   } else if (words[1] == "1.2") {
     return OpenCLVersion::CL_VER_1_2;
   } else if (words[1] == "1.1") {

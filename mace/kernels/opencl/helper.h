@@ -25,6 +25,10 @@
 #include "mace/core/types.h"
 #include "mace/utils/utils.h"
 
+#ifdef MACE_DEBUG_OPENCL
+#include "mace/codegen/mace_dir.h"
+#endif
+
 namespace mace {
 namespace kernels {
 

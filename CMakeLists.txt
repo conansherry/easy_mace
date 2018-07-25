@@ -30,6 +30,7 @@ EASY_MACE_OPTION(USE_OPENCL                   "-DMACE_ENABLE_OPENCL"            
 #EASY_MACE_OPTION(BUILD_SHARED_LIBRARIES       "Build shared library"               OFF)
 EASY_MACE_OPTION(BUILD_IOS_FRAMEWORK          "Build ios framework"                OFF)
 EASY_MACE_OPTION(BUILD_TESTS                  "Build tests application"            OFF)
+EASY_MACE_OPTION(DEBUG_OPENCL                 "Debug opencl"                       OFF)
 
 # END OPTION
 
@@ -56,7 +57,7 @@ else()
   set(EASY_MACE_LIBTYPE STATIC)
 endif()
 
-# enable opencl
+# enable neon
 if(USE_NEON AND BUILD_IOS_FRAMEWORK)
   add_definitions(-DMACE_ENABLE_NEON)
 endif()
@@ -68,6 +69,19 @@ if(USE_OPENCL AND NOT BUILD_IOS_FRAMEWORK)
     find_package(OpenCL REQUIRED)
     list(APPEND THIRD_PARTY_DEPENDENCIES ${OpenCL_LIBRARY})
   endif()
+endif()
+
+if(DEBUG_OPENCL AND USE_OPENCL)
+  # generate mace_dir.h
+  set(MACE_DIR "${PROJECT_SOURCE_DIR}")
+
+  # configure a header file to pass mace dir to the source code
+  configure_file (
+  "${PROJECT_SOURCE_DIR}/mace/codegen/mace_dir.h.in"
+  "${PROJECT_SOURCE_DIR}/mace/codegen/mace_dir.h"
+  )
+
+  add_definitions(-DMACE_DEBUG_OPENCL)
 endif()
 
 if(WIN32)
