@@ -1,7 +1,7 @@
 # easy mace (easy Mobile AI Compute Engine)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 * Thanks to [XiaoMI/mace](https://github.com/XiaoMi/mace)
-* easy mace update to [8fae54d17bbebf0392c1966d1116cf214c1c965c](https://github.com/XiaoMi/mace/tree/8fae54d17bbebf0392c1966d1116cf214c1c965c) (support caffe deconv)
+* easy mace update to [437c03e86e25ee4db8aa8a257371932abeb84f4a](https://github.com/XiaoMi/mace/tree/437c03e86e25ee4db8aa8a257371932abeb84f4a)
 
 ## How to build
 * Android
