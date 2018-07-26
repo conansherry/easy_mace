@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
     std::string pb_file_path = base_dir + "/resnet_v5_stride16_fpn_bigger_without_bn.pb";
     std::string data_file_path = base_dir + "/resnet_v5_stride16_fpn_bigger_without_bn.data";
 
-    DeviceType device_type = DeviceType::CPU;
+    DeviceType device_type = DeviceType::GPU;
 
     // config runtime
     mace::SetOpenMPThreadPolicy(1, static_cast<CPUAffinityPolicy>(0));
