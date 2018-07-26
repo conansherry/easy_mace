@@ -213,18 +213,18 @@ struct DepthwiseConv2dFunctor<DeviceType::CPU, float>
     auto bias_data = bias == nullptr ? nullptr : bias->data<float>();
     auto output_data = output->mutable_data<float>();
 
-    const int pad_hw[2] = {pad_top, pad_left};
-    const index_t input_shape[4] =
+    const std::vector<int> pad_hw = {pad_top, pad_left};
+    const std::vector<index_t> input_shape =
         {batch, input_channels, input_height, input_width};
 
     if (filter_h == 3 && filter_w == 3 && stride_h == 1 && stride_w == 1
       && dilation_h == 1 && dilation_w == 1) {
-      conv_func = [&](const float *input, float *output) {
+      conv_func = [=](const float *input, float *output) {
         DepthwiseConv2dNeonK3x3S1(input,
                                   filter_data,
-                                  input_shape,
+                                  input_shape.data(),
                                   output_shape.data(),
-                                  pad_hw,
+                                  pad_hw.data(),
                                   valid_h_start,
                                   valid_h_stop,
                                   valid_w_start,
@@ -233,12 +233,12 @@ struct DepthwiseConv2dFunctor<DeviceType::CPU, float>
       };
     } else if (filter_h == 3 && filter_w == 3 && stride_h == 2 && stride_w == 2
       && dilation_h == 1 && dilation_w == 1) {
-      conv_func = [&](const float *input, float *output) {
+      conv_func = [=](const float *input, float *output) {
         DepthwiseConv2dNeonK3x3S2(input,
                                   filter_data,
-                                  input_shape,
+                                  input_shape.data(),
                                   output_shape.data(),
-                                  pad_hw,
+                                  pad_hw.data(),
                                   valid_h_start,
                                   valid_h_stop,
                                   valid_w_start,
@@ -246,15 +246,15 @@ struct DepthwiseConv2dFunctor<DeviceType::CPU, float>
                                   output);
       };
     } else {
-      conv_func = [&](const float *input, float *output) {
+      conv_func = [=](const float *input, float *output) {
         DepthwiseConv2dGeneral(input,
                                filter_data,
-                               input_shape,
+                               input_shape.data(),
                                output_shape.data(),
                                filter_shape.data(),
                                strides_,
                                dilations_,
-                               pad_hw,
+                               pad_hw.data(),
                                output);
       };
     }
