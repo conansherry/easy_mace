@@ -36,8 +36,6 @@
 #include "mace/core/runtime/opencl/opencl_runtime.h"
 #endif
 
-#include <iostream>
-
 namespace mace {
 
 extern std::shared_ptr<KVStorageFactory> kStorageFactory;

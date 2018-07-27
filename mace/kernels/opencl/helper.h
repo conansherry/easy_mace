@@ -20,13 +20,16 @@
 
 #include "mace/core/future.h"
 #include "mace/core/macros.h"
-#include "mace/core/runtime/opencl/cl2_header.h"
-#include "mace/core/runtime/opencl/opencl_runtime.h"
 #include "mace/core/types.h"
 #include "mace/utils/utils.h"
 
 #ifdef MACE_DEBUG_OPENCL
 #include "mace/codegen/mace_dir.h"
+#endif
+
+#ifdef MACE_ENABLE_OPENCL
+#include "mace/core/runtime/opencl/cl2_header.h"
+#include "mace/core/runtime/opencl/opencl_runtime.h"
 #endif
 
 namespace mace {
@@ -47,6 +50,8 @@ enum BufferType {
   WEIGHT_HEIGHT = 7,
   WEIGHT_WIDTH = 8,
 };
+
+#ifdef MACE_ENABLE_OPENCL
 
 void CalImage2DShape(const std::vector<index_t> &shape, /* NHWC */
                      const BufferType type,
@@ -127,6 +132,10 @@ std::string Concat(Args... args) {
 
 std::vector<uint32_t> Default3DLocalWS(const uint32_t *gws,
                                        const uint32_t kwg_size);
+
+#endif
+
 }  // namespace kernels
 }  // namespace mace
+
 #endif  // MACE_KERNELS_OPENCL_HELPER_H_

@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
     std::string pb_file_path = base_dir + "/hand_pose_21pt.pb";
     std::string data_file_path = base_dir + "/hand_pose_21pt.data";
 
-    DeviceType device_type = DeviceType::GPU;
+    DeviceType device_type = DeviceType::CPU;
 
     // config runtime
     mace::SetOpenMPThreadPolicy(1, static_cast<CPUAffinityPolicy>(0));

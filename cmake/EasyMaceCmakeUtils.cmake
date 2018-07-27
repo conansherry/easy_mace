@@ -140,7 +140,7 @@ macro(easy_mace_make_group FILES_LIST)
     # Make sure we are using windows slashes
     string(REPLACE "/" "\\" GROUP "${GROUP}")
     # Group into "Source Files" and "Header Files"
-    if ("${FILE}" MATCHES ".*\\.cpp")
+    if ("${FILE}" MATCHES ".*\\.c")
       set(GROUP "Source Files${GROUP}")
     elseif("${FILE}" MATCHES ".*\\.h")
       set(GROUP "Header Files${GROUP}")

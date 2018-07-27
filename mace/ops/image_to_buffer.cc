@@ -18,6 +18,7 @@ namespace mace {
 namespace ops {
 
 void Register_ImageToBuffer(OperatorRegistryBase *op_registry) {
+#ifdef MACE_ENABLE_OPENCL
   MACE_REGISTER_OPERATOR(op_registry, OpKeyBuilder("ImageToBuffer")
                                           .Device(DeviceType::GPU)
                                           .TypeConstraint<float>("T")
@@ -29,6 +30,7 @@ void Register_ImageToBuffer(OperatorRegistryBase *op_registry) {
                                           .TypeConstraint<half>("T")
                                           .Build(),
                          ImageToBufferOp<DeviceType::GPU, half>);
+#endif
 }
 
 }  // namespace ops
