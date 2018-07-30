@@ -32,10 +32,10 @@ static bool ReadBinaryFile(std::vector<unsigned char> *data,
 int main(int argc, char* argv[])
 {
     std::string base_dir = "F:/workspace/XiaoMI/convert_model/builds/mmcv_model/model";
-    std::string pb_file_path = base_dir + "/hand_pose_21pt.pb";
-    std::string data_file_path = base_dir + "/hand_pose_21pt.data";
+    std::string pb_file_path = base_dir + "/resnet_v5_stride16_fpn_bigger_without_bn_fp16.pb";
+    std::string data_file_path = base_dir + "/resnet_v5_stride16_fpn_bigger_without_bn_fp16.data";
 
-    DeviceType device_type = DeviceType::CPU;
+    DeviceType device_type = DeviceType::GPU;
 
     // config runtime
     mace::SetOpenMPThreadPolicy(1, static_cast<CPUAffinityPolicy>(0));
@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
     // Define the input and output tensor names.
     std::vector<std::string> input_names = { "data" };
     //std::vector<std::string> output_names = { "upsampling0" };
-    std::vector<std::string> output_names = { "P2_aggregate" };
+    std::vector<std::string> output_names = { "softmax_score" };
 
     // Create Engine
     std::shared_ptr<mace::MaceEngine> engine;
@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
     std::map<std::string, mace::MaceTensor> outputs;
     std::vector<std::vector<int64_t>> input_shapes = { { 1, 256, 144, 3 } };
     //std::vector<std::vector<int64_t>> output_shapes = { { 1, 32, 18, 64 } };
-    std::vector<std::vector<int64_t>> output_shapes = { { 1, 32, 18, 22 } };
+    std::vector<std::vector<int64_t>> output_shapes = { { 1, 256, 144, 2 } };
     for (size_t i = 0; i < input_count; ++i)
     {
         // Allocate input and output

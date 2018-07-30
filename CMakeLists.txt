@@ -31,14 +31,20 @@ EASY_MACE_OPTION(USE_OPENCL                   "-DMACE_ENABLE_OPENCL"            
 EASY_MACE_OPTION(BUILD_IOS_FRAMEWORK          "Build ios framework"                OFF)
 EASY_MACE_OPTION(BUILD_TESTS                  "Build tests application"            OFF)
 EASY_MACE_OPTION(DEBUG_OPENCL                 "Debug opencl"                       OFF)
+EASY_MACE_OPTION(BUILD_UNIT_TESTS             "Build unit-tests application"       OFF)
 
 # END OPTION
 
 set(THIRD_PARTY_DEPENDENCIES "")
 
 add_subdirectory(external/protobuf-3.4.0)
-
 list(APPEND THIRD_PARTY_DEPENDENCIES "protobuf_lite")
+
+if(BUILD_UNIT_TESTS)
+  add_subdirectory(external/googletest)
+  include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+  include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR})
+endif()
 
 project(easy_mace CXX C)
 
@@ -146,4 +152,9 @@ if(BUILD_TESTS AND NOT BUILD_IOS_FRAMEWORK)
 	  add_subdirectory(${subdir})
     endif()
   endforeach()
+endif()
+
+include_directories("unit_tests")
+if(BUILD_UNIT_TESTS)
+  easy_mace_add_unit_tests("unit_tests" "${THIRD_PARTY_DEPENDENCIES}")
 endif()
