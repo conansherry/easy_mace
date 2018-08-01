@@ -38,7 +38,6 @@ EASY_MACE_OPTION(BUILD_UNIT_TESTS             "Build unit-tests application"    
 set(THIRD_PARTY_DEPENDENCIES "")
 
 add_subdirectory(external/protobuf-3.4.0)
-list(APPEND THIRD_PARTY_DEPENDENCIES "protobuf_lite")
 
 if(BUILD_UNIT_TESTS)
   add_subdirectory(external/googletest)
